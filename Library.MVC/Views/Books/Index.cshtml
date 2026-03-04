@@ -1,0 +1,94 @@
+﻿@model IEnumerable<Library.Domain.Entities.Book>
+
+@{
+    var categories = ViewBag.Categories as List<string> ?? new List<string>();
+    string currentSearch = ViewBag.CurrentSearch ?? "";
+    string currentCategory = ViewBag.CurrentCategory ?? "";
+    string currentAvailability = ViewBag.CurrentAvailability ?? "All";
+}
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-4">
+        <input class="form-control" name="search" value="@currentSearch" placeholder="Search Title or Author" />
+    </div>
+
+    <div class="col-md-3">
+        <select class="form-control" name="category">
+            <option value="">All Categories</option>
+            @foreach (var c in categories)
+            {
+                <option value="@c" selected="@(c == currentCategory)">@c</option>
+            }
+        </select>
+    </div>
+
+    <div class="col-md-3">
+        <select class="form-control" name="availability">
+            <option value="All" selected="@(currentAvailability == "All")">All</option>
+            <option value="Available" selected="@(currentAvailability == "Available")">Available</option>
+            <option value="OnLoan" selected="@(currentAvailability == "OnLoan")">On loan</option>
+        </select>
+    </div>
+
+    <div class="col-md-2">
+        <button class="btn btn-primary w-100" type="submit">Apply</button>
+    </div>
+</form>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Isbn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsAvailable)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Isbn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsAvailable)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

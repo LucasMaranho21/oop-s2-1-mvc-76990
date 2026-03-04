@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Library.Domain.Entities.Loan>
+
+@{
+    ViewData["Title"] = "Loans";
+}
+
+<h1>Loans</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create Loan</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Book</th>
+            <th>Member</th>
+            <th>Loan Date</th>
+            <th>Due Date</th>
+            <th>Returned</th>
+            <th>Overdue?</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var l in Model)
+        {
+            var overdue = l.ReturnedDate == null && l.DueDate.Date < DateTime.UtcNow.Date;
+            <tr>
+                <td>@l.Book?.Title</td>
+                <td>@l.Member?.FullName</td>
+                <td>@l.LoanDate.ToShortDateString()</td>
+                <td>@l.DueDate.ToShortDateString()</td>
+                <td>@(l.ReturnedDate == null ? "No" : l.ReturnedDate.Value.ToShortDateString())</td>
+                <td>@(overdue ? "YES" : "No")</td>
+                <td>
+                    @if (l.ReturnedDate == null)
+                    {
+                        <form asp-action="Return" method="post" style="display:inline;">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@l.Id" />
+                            <button class="btn btn-success btn-sm" type="submit">Return</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
