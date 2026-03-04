@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Library.Domain.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Library.Domain;
 
 namespace Library.MVC.Data
 {
@@ -10,6 +10,31 @@ namespace Library.MVC.Data
             : base(options)
         {
         }
-        public DbSet<Library.Domain.Products> Products { get; set; } = default!;
+
+        public DbSet<Book> Books => Set<Book>();
+        public DbSet<Member> Members => Set<Member>();
+        public DbSet<Loan> Loans => Set<Loan>();
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            // Book 1 -> * Loan
+            builder.Entity<Loan>()
+                .HasOne(l => l.Book)
+                .WithMany(b => b.Loans)
+                .HasForeignKey(l => l.BookId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Member 1 -> * Loan
+            builder.Entity<Loan>()
+                .HasOne(l => l.Member)
+                .WithMany(m => m.Loans)
+                .HasForeignKey(l => l.MemberId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Optional: simple indexes
+            builder.Entity<Book>().HasIndex(b => b.Isbn).IsUnique();
+        }
     }
 }
