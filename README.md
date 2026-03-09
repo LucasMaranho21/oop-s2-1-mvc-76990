@@ -4,12 +4,14 @@ Student Number: 76990
 Student Name: Lucas Madeira Maranho
 This project is an ASP.NET Core MVC application CA1 in Modern Programming Principles and Practice.
 
+## Overview
 The system allows staff to manage:
 - Books
 - Members
 - Loans
 - Admin roles
 
+## Technologies
 
 - ASP.NET Core MVC
 - Entity Framework Core
