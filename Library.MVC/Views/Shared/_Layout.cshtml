@@ -3,45 +3,58 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Library</title>
+    <title>@ViewData["Title"] - Community Library</title>
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
-<body class="bg-light">
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom shadow-sm">
-            <div class="container">
-                <a class="navbar-brand fw-semibold" asp-controller="Home" asp-action="Index">Community Library</a>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+<body class="bg-app">
+    <header class="app-nav border-bottom">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg py-3">
+                <a class="navbar-brand d-flex align-items-center gap-2" asp-controller="Home" asp-action="Index">
+                    <span class="brand-dot"></span>
+                    <span class="fw-bold text-white">Community Library</span>
+                </a>
+
+                <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="mainNav">
-                    <ul class="navbar-nav ms-auto">
+                    <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Books" asp-action="Index">Books</a>
+                            <a class="nav-link nav-link-app" asp-controller="Home" asp-action="Index">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Members" asp-action="Index">Members</a>
+                            <a class="nav-link nav-link-app" asp-controller="Books" asp-action="Index">Books</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Loans" asp-action="Index">Loans</a>
+                            <a class="nav-link nav-link-app" asp-controller="Members" asp-action="Index">Members</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-app" asp-controller="Loans" asp-action="Index">Loans</a>
+                        </li>
+                        <li class="nav-item ms-lg-2">
+                            <a class="btn btn-light btn-sm px-3" asp-controller="Books" asp-action="Create">+ Add Book</a>
                         </li>
                     </ul>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </div>
     </header>
 
-    <main class="container py-4">
-        @RenderBody()
-    </main>
+    <div class="container py-4">
+        @RenderSection("Hero", required: false)
+        <div class="app-surface p-3 p-md-4">
+            @RenderBody()
+        </div>
+    </div>
 
-    <footer class="border-top py-3 bg-white">
-        <div class="container small text-muted">
-            © @DateTime.Now.Year - Community Library Desk
+    <footer class="py-4">
+        <div class="container text-center small text-muted">
+            © @DateTime.Now.Year Community Library Desk
         </div>
     </footer>
 
