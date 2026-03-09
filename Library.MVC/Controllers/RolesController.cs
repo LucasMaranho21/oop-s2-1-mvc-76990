@@ -3,9 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Library.MVC.Areas.Admin.Controllers
+namespace Library.MVC.Controllers
 {
-    [Area("Admin")]
     [Authorize(Roles = "Admin")]
     public class RolesController : Controller
     {

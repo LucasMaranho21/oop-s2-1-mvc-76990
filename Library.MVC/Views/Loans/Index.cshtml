@@ -39,7 +39,10 @@
                         <form asp-action="Return" method="post" style="display:inline;">
                             @Html.AntiForgeryToken()
                             <input type="hidden" name="id" value="@l.Id" />
-                            <button class="btn btn-success btn-sm" type="submit">Return</button>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <button class="btn btn-success btn-sm" type="submit">Return</button>
+                            }
                         </form>
                     }
                 </td>
